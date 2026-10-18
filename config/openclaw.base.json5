@@ -1,0 +1,77 @@
+// OpenClaw settings for a beginner's LINE assistant (Phase 1 template).
+// NO SECRETS HERE. Anything written as ${NAME} is read from an environment variable
+// (on Railway: the service's Variables tab). ${NAME:-x} means "use x if NAME is empty".
+// entrypoint.sh applies this file at every start (objects merge; things set by the app, such as the
+// approved LINE owner, are kept).
+{
+  gateway: {
+    mode: "local",
+    // "lan" so Railway's public address can reach it. The gateway token below protects the control page.
+    bind: "${OPENCLAW_BIND:-lan}",
+    auth: { mode: "token", token: "${OPENCLAW_GATEWAY_TOKEN}" },
+    // If the control page is switched on, it may only be opened from this site's own public address (Railway sets the variable).
+    controlUi: { allowedOrigins: ["https://${RAILWAY_PUBLIC_DOMAIN:-localhost}"] },
+    // The port comes from the variable OPENCLAW_GATEWAY_PORT (default 8080), not from this file.
+  },
+
+  channels: {
+    line: {
+      enabled: true,
+      channelAccessToken: "${LINE_CHANNEL_ACCESS_TOKEN}",
+      channelSecret: "${LINE_CHANNEL_SECRET}",
+      // Strangers get a pairing code and are ignored until you approve them.
+      dmPolicy: "pairing",
+      // One-to-one chat only in Phase 1.
+      groupPolicy: "disabled",
+      joinIntro: false,
+    },
+  },
+
+  // The LINE plugin is installed separately; it must be trusted explicitly or its webhook is not served.
+  plugins: {
+    entries: {
+      line: { enabled: true },
+      // Background "dreaming" would use the AI on a schedule. Off to save the friend's money or plan quota.
+      "memory-core": { config: { dreaming: { enabled: false } } },
+    },
+  },
+
+  agents: {
+    defaults: {
+      // Royce's decision (2026-10-14): the cheapest model, gpt-6-luna, is the default. gpt-6-sol is a documented
+      // alternative: set ASSISTANT_MODEL=gpt-6-sol. Which models a ChatGPT plan offers is only known after sign-in
+      // (OpenClaw docs: "check the account catalog").
+      model: { primary: "openai/${ASSISTANT_MODEL:-gpt-6-luna}" },
+      userTimezone: "${ASSISTANT_TIMEZONE:-Asia/Tokyo}",
+      // We supply the instruction files ourselves (see workspace/), so skip the first-run questionnaire.
+      skipBootstrap: true,
+      // A heartbeat is an AI turn on a timer (every 30 minutes by default). Off.
+      heartbeat: { every: "0m" },
+    },
+  },
+
+  // Do not check for or announce updates at start. The version is pinned on purpose (see the Dockerfile).
+  update: { checkOnStart: false },
+
+  // Weekly self-review of skills also uses the AI. Off.
+  skills: { workshop: { autonomous: { mode: "off" } } },
+
+  // Reminders use scheduled automations, so this stays on.
+  cron: { enabled: true },
+
+  // Cut the assistant's tools down. The default set includes shell and file editing (exec, write, edit),
+  // which a trick hidden in a web page could abuse on the friend's server.
+  tools: {
+    profile: "messaging",
+    alsoAllow: ["web_search", "web_fetch", "memory_search", "memory_get", "automations"],
+    // Shell and file tools off. Also off: tools that message other chats, start sub-assistants, update the
+    // software, or change the control page. The assistant only replies to its owner.
+    deny: [
+      "group:runtime", "group:fs",
+      "message", "conversations_list", "conversations_send", "conversations_turn",
+      "sessions", "sessions_send", "sessions_spawn", "subagents", "gateway", "theme", "presence", "ask_user",
+    ],
+  },
+
+  // Google Maps: see config/maps.json5 (applied by entrypoint.sh only when GOOGLE_MAPS_API_KEY is set).
+}

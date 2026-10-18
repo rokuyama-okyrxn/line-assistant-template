@@ -1,0 +1,4 @@
+// Applied by entrypoint.sh when WEB_TOOLS is anything but "off" (the default), so an earlier "off" start cannot stick.
+{
+  tools: { web: { search: { enabled: true }, fetch: { enabled: true } } },
+}

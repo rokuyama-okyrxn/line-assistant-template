@@ -1,0 +1,46 @@
+# Every value the assistant needs. NO real values in this file. On Railway you type these into the
+# deploy form or the service's Variables tab. Mark the secret ones as secret (Railway: sealed after saving).
+
+# --- Made for you by Railway when you deploy (secret) ---
+# Where: Railway > your service > Variables. You paste it once into the control page to sign in.
+OPENCLAW_GATEWAY_TOKEN=
+
+# --- LINE (secret). Where: LINE Developers Console > your channel ---
+# Basic settings tab > Channel secret
+LINE_CHANNEL_SECRET=
+# Messaging API tab > Channel access token (long-lived) > Issue
+LINE_CHANNEL_ACCESS_TOKEN=
+
+# --- Needed on the guide's route (the guide says it is required): only you may chat, no pairing command needed ---
+# Where: LINE Developers Console > your channel > Basic settings tab > "Your user ID" (starts with U).
+# (Shown only if your LINE Business ID is linked to your LINE account.) Leave empty to use pairing instead.
+LINE_OWNER_USER_ID=
+
+# --- Google Maps (secret). OPTIONAL ADD-ON, OFF by default. Do NOT put this in the Railway deploy form. ---
+# Empty = Maps off (the template ships this way). A friend adds the variable later, by hand, after the first "Hello"
+# (guide page X05 "Add Maps later"). Where: Google Cloud Console > APIs & Services > Credentials.
+# The key must be allowed to use the "Maps Grounding Lite API" (mapstools.googleapis.com).
+GOOGLE_MAPS_API_KEY=
+
+# --- OpenAI API key (secret, OPTIONAL: the backup if the ChatGPT sign-in stops working) ---
+# Where: OpenAI platform dashboard > API keys. Add prepaid credit and a spending limit first.
+OPENAI_API_KEY=
+
+# --- Web tools (not secret). The assistant can search the web and read web pages. A bad page could try to steer it. ---
+# "off" = remove web search and web page reading. Empty, missing or anything else = they stay on (default).
+# NOTE the empty behaviour is the opposite of CHATGPT_SIGNIN below: empty here means ON, empty there means off.
+WEB_TOOLS=
+
+# --- Defaults you normally leave alone (not secret) ---
+# Port: leave unset. The assistant uses Railway's PORT if Railway sets it, otherwise 8080 (public networking must point to the same port).
+OPENCLAW_STATE_DIR=/data/.openclaw
+OPENCLAW_WORKSPACE_DIR=/data/workspace
+ASSISTANT_TIMEZONE=Asia/Tokyo
+ASSISTANT_MODEL=gpt-6-luna
+# Alternative, one setting away: gpt-6-sol
+# "off" (default) = the public control page is switched off; the ChatGPT sign-in code appears in the Railway logs.
+# "on" = keep the control page; each new browser must then be approved with `openclaw devices approve` on the server.
+OPENCLAW_CONTROL_UI=off
+# "on" (default) = at start, print a ChatGPT sign-in code in the Railway logs. "off" = use only the OpenAI API key.
+CHATGPT_SIGNIN=on
+# Only "on" (or the variable missing altogether) starts the sign-in helper. Empty, "off" or any other value = off.

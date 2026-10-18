@@ -1,0 +1,5 @@
+// Applied by entrypoint.sh when GOOGLE_MAPS_API_KEY is empty, so an earlier start cannot leave Maps switched on
+// with a missing key.
+{
+  mcp: { servers: { "google-maps": { enabled: false } } },
+}

@@ -1,0 +1,4 @@
+// Applied by entrypoint.sh when WEB_TOOLS=off: the assistant gets no web search and no web page reading.
+{
+  tools: { web: { search: { enabled: false }, fetch: { enabled: false } } },
+}

@@ -1,0 +1,7 @@
+// Applied by entrypoint.sh ONLY when the variable LINE_OWNER_USER_ID is set.
+// Replaces "pairing" with an allowlist of exactly one LINE user: the owner. Nobody else is answered,
+// and no pairing command is needed. The ID is in LINE Developers Console > channel > Basic settings > "Your user ID".
+{
+  channels: { line: { dmPolicy: "allowlist", allowFrom: ["${LINE_OWNER_USER_ID}"] } },
+  commands: { ownerAllowFrom: ["line:${LINE_OWNER_USER_ID}"] },
+}

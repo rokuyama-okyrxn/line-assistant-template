@@ -1,0 +1,5 @@
+// Applied by entrypoint.sh when OPENCLAW_CONTROL_UI=on. Writes enabled:true explicitly, because an earlier start
+// may have saved enabled:false (settings are merged, not replaced).
+{
+  gateway: { controlUi: { enabled: true } },
+}

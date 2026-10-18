@@ -1,0 +1,16 @@
+// Applied by entrypoint.sh only when GOOGLE_MAPS_API_KEY is set.
+// Google's own "Maps Grounding Lite" MCP server (Google docs, read 2026-10-14):
+//   endpoint https://mapstools.googleapis.com/mcp, Streamable HTTP, API key in the X-Goog-Api-Key header.
+// The key is read from the environment variable; it is never written in this file.
+{
+  mcp: {
+    servers: {
+      "google-maps": {
+        enabled: true,
+        url: "https://mapstools.googleapis.com/mcp",
+        transport: "streamable-http",
+        headers: { "X-Goog-Api-Key": "${GOOGLE_MAPS_API_KEY}" },
+      },
+    },
+  },
+}

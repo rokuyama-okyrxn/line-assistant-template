@@ -1,0 +1,7 @@
+// Applied by entrypoint.sh unless OPENCLAW_CONTROL_UI=on.
+// Switches the public "control page" off. A beginner does not need it: the ChatGPT sign-in code is printed
+// in the Railway logs instead (see chatgpt-signin.sh). Less exposed to the internet = fewer ways in.
+// (OpenClaw's old "easy mode" key gateway.controlUi.dangerouslyDisableDeviceAuth is retired and does nothing in 2026.10.3.)
+{
+  gateway: { controlUi: { enabled: false } },
+}
