@@ -38,7 +38,7 @@
 
   agents: {
     defaults: {
-      // Royce's decision (2026-10-14): the cheapest model, gpt-6-luna, is the default. gpt-6-sol is a documented
+      // Owner's decision (2026-10-14): the cheapest model, gpt-6-luna, is the default. gpt-6-sol is a documented
       // alternative: set ASSISTANT_MODEL=gpt-6-sol. Which models a ChatGPT plan offers is only known after sign-in
       // (OpenClaw docs: "check the account catalog").
       model: { primary: "openai/${ASSISTANT_MODEL:-gpt-6-luna}" },
