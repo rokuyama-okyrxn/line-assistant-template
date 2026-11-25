@@ -1,6 +1,9 @@
-# Railway reads this file. NOTE: Railway says this file type (config as code) is being replaced by
-# Infrastructure as Code and that existing files work until 2026-12-01 (docs.railway.com/config-as-code/reference,
-# read 2026-10-14). Volumes and variables are NOT set here; they are set in Railway's template composer.
+# Railway no longer reads this file for deploys from the template. Railway's docs (rechecked 2026-11-25): config as code is
+# deprecated, new services cannot use it (new projects since 2026-08-28), and existing files stop being read on
+# 2026-12-01. A deploy from the template is a new project, so this file has no effect there.
+# Kept only as a record of the intended settings. Every value below except the health check path is already
+# Railway's default (a Dockerfile at the root is always used; restart On Failure, 10 tries; health check 300 s).
+# The health check path /healthz is set in the template's service settings in Railway.
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "Dockerfile"

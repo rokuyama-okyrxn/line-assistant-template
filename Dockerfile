@@ -1,5 +1,5 @@
-# NOT BUILT OR TESTED YET: no container tool was available on the machine that wrote this.
-# Read it line by line before the first real build. Every version is pinned on purpose.
+# Built and run in a Linux container on a Mac with fake keys on 2026-11-06 (19 of 19 checks; the test rig is kept private).
+# NOT yet built or run on Railway. Every version is pinned on purpose.
 FROM node:24-bookworm-slim
 
 ARG OPENCLAW_VERSION=2026.10.3

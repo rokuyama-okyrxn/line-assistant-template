@@ -2,14 +2,14 @@
 
 A starting point for a beginner's own AI assistant in LINE. One-to-one text chat only. Built 2026-10-14 for the guide in `../guide-src/`. Design and reasons: `../design/template-design.md`.
 
-**Status:** the settings, start-up script and instruction files were **tested locally** with fake keys (see "Local test record"). The `Dockerfile` and `railway.toml` were **not built or run** (no container tool on the build machine; no Railway account used). Nothing here has talked to LINE, OpenAI, Google or Railway.
+**Status:** the settings, start-up script and instruction files were **tested locally** with fake keys (see "Local test record"), and (2026-11-06) the `Dockerfile` was **built and run in a Linux container on a Mac** (Colima) with fake keys and no route to the internet: 19 of 19 container checks passed. `railway.toml` and Railway itself were **not run** (no Railway account used). Nothing here has talked to real LINE, OpenAI, Google or Railway. The assistant's reply was produced by a fake model and its send to LINE was tried but could not arrive (no route out), so "replies in LINE" is not yet tested.
 
 ## What is in this folder
 
 | File | Purpose |
 |---|---|
 | `Dockerfile` | Image: Node 24 and OpenClaw 2026.10.3, pinned. Starts as root only to fix the volume owner, then runs as `node`; the start scripts stay root-owned. |
-| `railway.toml` | Build with the Dockerfile; health check `/healthz`; restart on failure (10 tries). (Railway is replacing this file type; it works until 2026-12-01.) |
+| `railway.toml` | A record only: Railway does not read it for deploys from the template (new projects since 2026-08-28; no service at all from 2026-12-01). Its values are Railway's defaults except the health check path `/healthz`, which is set in the template's service settings. |
 | `entrypoint.sh` | At every start: check the required variables, install the LINE plugin if missing, reset `AGENTS.md` from the template (every start; SOUL.md and USER.md only if missing), apply the web-tools setting (`WEB_TOOLS=on` removes web search and page reading), apply the settings (control page off, optional owner-only list and backup key) and start the ChatGPT sign-in helper, start. |
 | `chatgpt-signin.sh` | In the background after start: prints a ChatGPT sign-in code and address into the log (Railway: Deployments > Logs). |
 | `config/maps.json5`, `maps-off.json5` | Google's Maps Grounding Lite (remote MCP, key in the `X-Goog-Api-Key` header from `GOOGLE_MAPS_API_KEY`); applied only when the key is set; Maps is an optional add-on and ships off (empty key = `maps-off.json5`). |
